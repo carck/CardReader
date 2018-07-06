@@ -18,24 +18,24 @@ public class MainActivity extends AppCompatActivity implements  NfcAdapter.Reade
 
     @Override
     public void onTagDiscovered(Tag tag) {
-        val isoDep = IsoDep.get(tag)
-        isoDep.connect()
+        IsoDep isoDep = IsoDep.get(tag);
+        isoDep.connect();
         val response = isoDep.transceive(Utils.hexStringToByteArray(
                 "00A4040007A0000002471001"))
         runOnUiThread { textView.append("\nCard Response: "
                 + Utils.toHex(response)) }
-        isoDep.close()
+        isoDep.close();
     }
-    public override fun onResume() {
-        super.onResume()
-        nfcAdapter?.enableReaderMode(this, this,
-                NfcAdapter.FLAG_READER_NFC_A or
+    public void onResume() {
+        super.onResume();
+        nfcAdapter.enableReaderMode(this, this,
+                NfcAdapter.FLAG_READER_NFC_A |
                 NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK,
-                null)
+                null);
     }
 
-    public override fun onPause() {
-        super.onPause()
-        nfcAdapter?.disableReaderMode(this)
+    public void onPause() {
+        super.onPause();
+        nfcAdapter.disableReaderMode(this);
     }
 }
